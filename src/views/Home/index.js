@@ -37,15 +37,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const HomeView = (props) => {
-  console.log(props);
-  const { match, history } = props;
+  // console.log(props);
+  // const { match, history } = props;
   //const { params } = match;
   //const { page } = params;
 
   const classes = useStyles();
   const [customers] = useState(data);
 
-  console.log(history);
+  // console.log(history);
 
   const [selectedTab, setSelectedTab] = useState("myTasks");
 
@@ -93,9 +93,12 @@ const HomeView = (props) => {
   );
 };
 
+{
+  /*
 HomeView.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
-};
+};*/
+}
 
 export default HomeView;
