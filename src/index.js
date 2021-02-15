@@ -6,12 +6,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import { createBrowserHistory } from "history";
-
-const history = createBrowserHistory();
-
 ReactDOM.render(
-  <BrowserRouter history={history}>
+  <BrowserRouter>
     <App />
   </BrowserRouter>,
   document.getElementById("root")
