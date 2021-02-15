@@ -1,0 +1,9 @@
+{
+  "drpDownVals": [
+    { "label": "Singapore", "value": "SG" },
+    { "label": "India", "value": "IN" },
+    { "label": "Malaysia", "value": "ML" },
+    { "label": "Australia", "value": "AU" },
+    { "label": "Indonesia", "value": "IND" }
+  ]
+}

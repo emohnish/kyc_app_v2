@@ -1,0 +1,8 @@
+{
+  "drpDownVals": [
+    { "label": "Driving Licence", "value": "0" },
+    { "label": "Passport", "value": "1" },
+    { "label": "Identification Card", "value": "2" },
+    { "label": "Register of Companies", "value": "3" }
+  ]
+}

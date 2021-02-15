@@ -1,0 +1,9 @@
+{
+  "drpDownVals": [
+    { "label": "Entity A", "value": "entityA" },
+    { "label": "Entity B", "value": "entityB" },
+    { "label": "Entity C", "value": "entityC" },
+    { "label": "Entity D", "value": "entityD" },
+    { "label": "Entity E", "value": "entityE" }
+  ]
+}

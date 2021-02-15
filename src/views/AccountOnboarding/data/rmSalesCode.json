@@ -1,0 +1,9 @@
+{
+  "drpDownVals": [
+    { "label": "RM Sales Code A", "value": "rmSalesCodeA" },
+    { "label": "RM Sales Code B", "value": "rmSalesCodeB" },
+    { "label": "RM Sales Code C", "value": "rmSalesCodeC" },
+    { "label": "RM Sales Code D", "value": "rmSalesCodeD" },
+    { "label": "RM Sales Code E", "value": "rmSalesCodeF" }
+  ]
+}

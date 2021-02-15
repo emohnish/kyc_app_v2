@@ -1,0 +1,9 @@
+{
+  "drpDownVals": [
+    { "label": "LM Name A", "value": "lmNameA" },
+    { "label": "LM Name B", "value": "lmNameB" },
+    { "label": "LM Name C", "value": "lmNameC" },
+    { "label": "LM Name D", "value": "lmNameD" },
+    { "label": "LM Name E", "value": "lmNameF" }
+  ]
+}

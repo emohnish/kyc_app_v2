@@ -1,0 +1,9 @@
+{
+  "drpDownVals": [
+    { "label": "Account Type A", "value": "accountTypeA" },
+    { "label": "Account Type B", "value": "accountTypeB" },
+    { "label": "Account Type C", "value": "accountTypeC" },
+    { "label": "Account Type D", "value": "accountTypeD" },
+    { "label": "Account Type E", "value": "accountTypeF" }
+  ]
+}

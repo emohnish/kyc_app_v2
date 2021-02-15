@@ -1,0 +1,9 @@
+{
+  "drpDownVals": [
+    { "label": "Relationship Manager Name A", "value": "relManagerNameA" },
+    { "label": "Relationship Manager Name B", "value": "relManagerNameB" },
+    { "label": "Relationship Manager Name C", "value": "relManagerNameC" },
+    { "label": "Relationship Manager Name D", "value": "relManagerNameD" },
+    { "label": "Relationship Manager Name E", "value": "relManagerNameE" }
+  ]
+}
