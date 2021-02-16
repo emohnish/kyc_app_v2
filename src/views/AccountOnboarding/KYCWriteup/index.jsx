@@ -17,13 +17,21 @@ import {
   TextField,
   Button,
   ButtonGroup,
+  Container,
+  Card,
+  CardHeader,
+  Divider,
+  CardContent,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
+import Page from "../../../components/Page";
 import { useForm } from "react-hook-form";
 
 import countriesDataInJSON from "../data/countries.json";
 import identificationTypeDataInJSON from "../data/identificationType.json";
+import ClientIdentification from "./ClientIdentification";
+import ClientParticulars from "./ClientParticulars";
 
 const StyledBox = styled(Box)`
   background-color: #efefef;
@@ -31,18 +39,14 @@ const StyledBox = styled(Box)`
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: theme.palette.background.dark,
+    minHeight: "100%",
+    paddingBottom: theme.spacing(3),
+    paddingTop: theme.spacing(3),
+  },
+  buttonClass: {
     "& > *": {
       margin: theme.spacing(0.5),
-    },
-    formControl: {
-      margin: theme.spacing(12),
-      minWidth: 120,
-    },
-    formClass: {
-      "& .MuiTextField-root": {
-        margin: theme.spacing(1),
-        width: "25ch",
-      },
     },
   },
 }));
@@ -59,7 +63,7 @@ const KYCWriteup = () => {
   const [issueDate, setIssueDate] = useState("");
   const [validTo, setValidTo] = useState("");
 
-  const [nationalitySelVal, setNationalitySelVal] = useState("SG");
+  // const [nationalitySelVal, setNationalitySelVal] = useState("SG");
   const [countryOfDomicileSelVal, setCountryOfDomicileSelVal] = useState("SG");
 
   const [taxResidenceSelVal, setTaxResidenceSelVal] = useState("IN");
@@ -70,6 +74,21 @@ const KYCWriteup = () => {
     identificationTypeDrpdwnVals,
     setIdentificationTypeDrpdwnVals,
   ] = useState([]);
+
+  const [values, setValues] = useState({
+    givenName: "",
+    surName: "",
+    dob: "",
+    clientName: "",
+    nationalitySelVal: "SG",
+    countryOfDomicileSelVal: "SG",
+    taxResidenceSelVal: "IN",
+    identificationTypeSelVal: "DL",
+    identificationNo: "",
+    issueCountry: "SG",
+    issueDate: "",
+    validTo: "",
+  });
 
   useEffect(() => {
     setCountriesDrpdwnVals(
@@ -94,436 +113,309 @@ const KYCWriteup = () => {
 
   const classes = useStyles();
 
+  const handleChange = (event) => {
+    console.log(event.target.name);
+    console.log(event.target.value);
+
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className={classes.formClass}>
-        <Typography variant="h6" gutterBottom>
-          Client Particulars (Individual)
-        </Typography>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Page className={classes.root} title="KYC Writeup">
+        <Container maxWidth="lg">
+          <Grid container spacing={3}>
+            <Grid item lg={12} md={12} xs={12}>
+              {/*} <ClientParticulars
+                countriesDrpdwnVals={countriesDrpdwnVals}
+                handleChange={() => handleChange()}
+  /> */}
 
-        <StyledBox m={2} p={1} display="block">
-          <Grid container spacing={1}>
-            <Grid container item xs={12} spacing={5}>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Given Name:
-                  </Typography>
-                </Grid>
+              <Card>
+                <CardHeader
+                  subheader=""
+                  title="Client Particulars (Individual)"
+                />
+                <Divider />
+                <CardContent>
+                  <Grid container spacing={3}>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Given Name"
+                        name="givenName"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.givenName}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Sur Name"
+                        name="surName"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.surName}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="DOB"
+                        type="date"
+                        name="dob"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.dob}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Client Name"
+                        name="clientName"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.clientName}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Select Nationality"
+                        name="nationalitySelVal"
+                        onChange={handleChange}
+                        required
+                        select
+                        SelectProps={{ native: true }}
+                        value={values.nationalitySelVal}
+                        variant="outlined"
+                        inputRef={register}
+                      >
+                        {countriesDrpdwnVals.map((values) => {
+                          return (
+                            <option key={values.value} value={values.value}>
+                              {values.label}
+                            </option>
+                          );
+                        })}
+                      </TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Select Country of Domicile"
+                        name="countryOfDomicileSelVal"
+                        onChange={handleChange}
+                        required
+                        select
+                        SelectProps={{ native: true }}
+                        value={values.countryOfDomicileSelVal}
+                        variant="outlined"
+                        inputRef={register}
+                      >
+                        {countriesDrpdwnVals.map((values) => {
+                          return (
+                            <option key={values.value} value={values.value}>
+                              {values.label}
+                            </option>
+                          );
+                        })}
+                      </TextField>
+                    </Grid>
 
-                <Grid item xs={6}>
-                  <Input
-                    name="givenName"
-                    value={givenName}
-                    inputRef={register}
-                    onChange={(e) => setGivenName(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Surname:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Input
-                    name="surName"
-                    value={surName}
-                    inputRef={register}
-                    onChange={(e) => setSurName(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    DOB:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Input
-                    name="dob"
-                    value={dob}
-                    inputRef={register}
-                    onChange={(e) => setDOB(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Select Tax Residence"
+                        name="taxResidenceSelVal"
+                        onChange={handleChange}
+                        required
+                        select
+                        SelectProps={{ native: true }}
+                        value={values.taxResidenceSelVal}
+                        variant="outlined"
+                        inputRef={register}
+                      >
+                        {countriesDrpdwnVals.map((values) => {
+                          return (
+                            <option key={values.value} value={values.value}>
+                              {values.label}
+                            </option>
+                          );
+                        })}
+                      </TextField>
+                    </Grid>
+                  </Grid>
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid container item xs={12} spacing={5}>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Client Name:
-                  </Typography>
-                </Grid>
 
-                <Grid item xs={6}>
-                  <Input
-                    name="clientName"
-                    value={clientName}
-                    inputRef={register}
-                    onChange={(e) => setClientName(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Nationality:
-                  </Typography>
-                </Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              {/* <ClientIdentification
+                countriesDrpdwnVals={countriesDrpdwnVals}
+                identificationTypeDrpdwnVals={identificationTypeDrpdwnVals}
+            />*/}
 
-                <Grid item xs={6}>
-                  <FormControl>
-                    <select
-                      name="nationality"
-                      ref={register}
-                      value={nationalitySelVal}
-                      onChange={(e) =>
-                        setNationalitySelVal(e.currentTarget.value)
-                      }
-                    >
-                      {countriesDrpdwnVals.map((values) => {
-                        return (
-                          <option key={values.value} value={values.value}>
-                            {values.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Country of Domicile:
-                  </Typography>
-                </Grid>
+              <Card>
+                <CardHeader subheader="" title="Client Identification" />
+                <Divider />
+                <CardContent>
+                  <Grid container spacing={3}>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Select Identification Type"
+                        name="identificationTypeSelVal"
+                        onChange={handleChange}
+                        required
+                        select
+                        SelectProps={{ native: true }}
+                        value={values.identificationTypeSelVal}
+                        variant="outlined"
+                        inputRef={register}
+                      >
+                        {identificationTypeDrpdwnVals.map((values) => {
+                          return (
+                            <option key={values.value} value={values.value}>
+                              {values.label}
+                            </option>
+                          );
+                        })}
+                      </TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Identification No."
+                        name="identificationNo"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.identificationNo}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Select Issue Country"
+                        name="issueCountrySelVal"
+                        onChange={handleChange}
+                        required
+                        select
+                        SelectProps={{ native: true }}
+                        value={values.issueCountrySelVal}
+                        variant="outlined"
+                        inputRef={register}
+                      >
+                        {countriesDrpdwnVals.map((values) => {
+                          return (
+                            <option key={values.value} value={values.value}>
+                              {values.label}
+                            </option>
+                          );
+                        })}
+                      </TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Issue Date"
+                        name="issueDate"
+                        type="date"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.issueDate}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                    <Grid item lg={4} md={4} xs={12}>
+                      <TextField
+                        fullWidth
+                        label="Issue Date"
+                        name="validTo"
+                        type="date"
+                        onChange={handleChange}
+                        required
+                        SelectProps={{ native: true }}
+                        value={values.validTo}
+                        variant="outlined"
+                        inputRef={register}
+                        InputLabelProps={{ shrink: true }}
+                      ></TextField>
+                    </Grid>
+                  </Grid>
 
-                <Grid item xs={6}>
-                  <FormControl>
-                    <select
-                      name="countryOfDomicile"
-                      ref={register}
-                      value={countryOfDomicileSelVal}
-                      onChange={(e) =>
-                        setCountryOfDomicileSelVal(e.currentTarget.value)
-                      }
-                    >
-                      {countriesDrpdwnVals.map((values) => {
-                        return (
-                          <option key={values.value} value={values.value}>
-                            {values.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </FormControl>
-                </Grid>
-              </Grid>
+                  <Grid item lg={12} md={12} xs={12}>
+                    <Box display="flex" justifyContent="flex-end" p={2}>
+                      <div className={classes.buttonClass}>
+                        <Button
+                          color="contained"
+                          size="small"
+                          variant="outlined"
+                        >
+                          +
+                        </Button>
+                        <Button
+                          color="contained"
+                          size="small"
+                          variant="outlined"
+                        >
+                          -
+                        </Button>
+                      </div>
+                    </Box>
+                  </Grid>
+                </CardContent>
+              </Card>
             </Grid>
-            <Grid container item xs={12} spacing={5}>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Tax Residence:
-                  </Typography>
-                </Grid>
 
-                <Grid item xs={6}>
-                  <FormControl>
-                    <select
-                      name="taxResidence"
-                      ref={register}
-                      value={taxResidenceSelVal}
-                      onChange={(e) =>
-                        setTaxResidenceSelVal(e.currentTarget.value)
-                      }
-                    >
-                      {countriesDrpdwnVals.map((values) => {
-                        return (
-                          <option key={values.value} value={values.value}>
-                            {values.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-
-              <Grid container item xs={8}></Grid>
-            </Grid>
-          </Grid>
-        </StyledBox>
-
-        <Typography variant="h6" gutterBottom>
-          Client Identification
-        </Typography>
-
-        <StyledBox m={2} p={1} display="block">
-          <Grid container spacing={1}>
-            <Grid container item xs={12} spacing={5}>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Identification Type:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <FormControl>
-                    <select
-                      name="identificationType"
-                      ref={register}
-                      value={identificationTypeSelVal}
-                      onChange={(e) =>
-                        setIdentificationTypeSelVal(e.currentTarget.value)
-                      }
-                    >
-                      {identificationTypeDrpdwnVals.map((values) => {
-                        return (
-                          <option key={values.value} value={values.value}>
-                            {values.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Identification No:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <Input
-                    name="identificationNo"
-                    value={identificationNo}
-                    inputRef={register}
-                    onChange={(e) => setIdentificationNo(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-
-              <Grid container item xs={4}></Grid>
-            </Grid>
-            <Grid container item xs={12} spacing={5}>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Issue Country:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <FormControl>
-                    <select
-                      name="issueCountry"
-                      ref={register}
-                      value={nationalitySelVal}
-                      onChange={(e) =>
-                        setNationalitySelVal(e.currentTarget.value)
-                      }
-                    >
-                      {countriesDrpdwnVals.map((values) => {
-                        return (
-                          <option key={values.value} value={values.value}>
-                            {values.label}
-                          </option>
-                        );
-                      })}
-                    </select>
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Issue Date:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <TextField
-                    id="issueDate"
-                    type="date"
-                    name="issueDate"
-                    value={issueDate}
-                    inputRef={register}
-                    inputProps={{ style: { fontSize: 14 } }}
-                    onChange={(e) => setIssueDate(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
-              <Grid container item xs={4}>
-                <Grid item xs={6}>
-                  <Typography variant="body2" gutterBottom>
-                    Valid To:
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={6}>
-                  <TextField
-                    id="validTo"
-                    type="date"
-                    name="validTo"
-                    value={validTo}
-                    inputRef={register}
-                    inputProps={{ style: { fontSize: 14 } }}
-                    onChange={(e) => setValidTo(e.target.value)}
-                  />
-                </Grid>
-              </Grid>
+            <Grid item lg={12} md={12} xs={12}>
+              <Box display="flex" justifyContent="flex-end" p={2}>
+                <div className={classes.buttonClass}>
+                  <Button
+                    color="secondary"
+                    variant="contained"
+                    onClick={handleSubmit(onSubmit)}
+                  >
+                    Save
+                  </Button>
+                  <Button color="secondary" variant="contained">
+                    Next
+                  </Button>
+                </div>
+              </Box>
             </Grid>
           </Grid>
-        </StyledBox>
-        {/*
-        <StyledBox m={2} p={1} display="block">
-          <Grid container spacing={1}>
-            <Grid item xs={2}>
-              <Typography variant="body2" gutterBottom>
-                Identification Type:
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <FormControl>
-                <select
-                  name="identificationType"
-                  ref={register}
-                  value={identificationTypeSelVal}
-                  onChange={(e) =>
-                    setIdentificationTypeSelVal(e.currentTarget.value)
-                  }
-                >
-                  {identificationTypeDrpdwnVals.map((values) => {
-                    return (
-                      <option key={values.value} value={values.value}>
-                        {values.label}
-                      </option>
-                    );
-                  })}
-                </select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={2}>
-              <Typography variant="body2" gutterBottom>
-                Identification No:
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <select name="taxResidence" ref={register}>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-            </Grid>
-            <Grid item xs={4}></Grid>
-
-            <Grid item xs={2}>
-              <Typography variant="body2" gutterBottom>
-                Issue Country:
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <FormControl>
-                <select
-                  name="issueCountry"
-                  ref={register}
-                  value={nationalitySelVal}
-                  onChange={(e) => setNationalitySelVal(e.currentTarget.value)}
-                >
-                  {countriesDrpdwnVals.map((values) => {
-                    return (
-                      <option key={values.value} value={values.value}>
-                        {values.label}
-                      </option>
-                    );
-                  })}
-                </select>
-              </FormControl>
-            </Grid>
-
-            <Grid item xs={2}>
-              <Typography variant="body2" gutterBottom>
-                Issue Date:
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <select name="taxResidence" ref={register}>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-            </Grid>
-
-            <Grid item xs={2}>
-              <Typography variant="body2" gutterBottom>
-                Valid To:
-              </Typography>
-            </Grid>
-            <Grid item xs={2}>
-              <select name="taxResidence" ref={register}>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
-            </Grid>
-          </Grid>
-        </StyledBox>
-                */}
-
-        <Grid
-          item
-          xs={12}
-          style={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <div className={classes.root}>
-            <Button color="contained" size="small" variant="outlined">
-              +
-            </Button>
-            <Button color="contained" size="small" variant="outlined">
-              -
-            </Button>
-          </div>
-        </Grid>
-
-        <Grid
-          item
-          xs={12}
-          style={{ display: "flex", justifyContent: "flex-end" }}
-        >
-          <div className={classes.root}>
-            <Button color="contained" size="small" variant="outlined">
-              PREVIOUS
-            </Button>
-            <Button
-              color="contained"
-              size="small"
-              variant="outlined"
-              onClick={handleSubmit(onSubmit)}
-            >
-              SAVE
-            </Button>
-            <Button color="contained" size="small" variant="outlined">
-              NEXT
-            </Button>
-          </div>
-        </Grid>
-      </form>
-    </div>
+        </Container>
+      </Page>
+    </form>
   );
 };
 
