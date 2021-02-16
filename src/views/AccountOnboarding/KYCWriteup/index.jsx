@@ -399,6 +399,9 @@ const KYCWriteup = () => {
             <Grid item lg={12} md={12} xs={12}>
               <Box display="flex" justifyContent="flex-end" p={2}>
                 <div className={classes.buttonClass}>
+                  <Button color="secondary" variant="contained">
+                    Previous
+                  </Button>
                   <Button
                     color="secondary"
                     variant="contained"
