@@ -54,26 +54,22 @@ const useStyles = makeStyles((theme) => ({
 const KYCWriteup = () => {
   const { register, handleSubmit } = useForm();
 
-  const [givenName, setGivenName] = useState("");
-  const [surName, setSurName] = useState("");
-  const [dob, setDOB] = useState("");
-  const [clientName, setClientName] = useState("");
-  const [identificationNo, setIdentificationNo] = useState("");
-
-  const [issueDate, setIssueDate] = useState("");
-  const [validTo, setValidTo] = useState("");
-
-  // const [nationalitySelVal, setNationalitySelVal] = useState("SG");
-  const [countryOfDomicileSelVal, setCountryOfDomicileSelVal] = useState("SG");
-
-  const [taxResidenceSelVal, setTaxResidenceSelVal] = useState("IN");
-  const [identificationTypeSelVal, setIdentificationTypeSelVal] = useState(0);
-
   const [countriesDrpdwnVals, setCountriesDrpdwnVals] = useState([]);
   const [
     identificationTypeDrpdwnVals,
     setIdentificationTypeDrpdwnVals,
   ] = useState([]);
+
+  const [clientIdentificationForm, setClientIdentificationForm] = useState([
+    {
+      isChecked: false,
+      identificationTypeSelVal: "DL",
+      identificationNo: "",
+      issueCountry: "SG",
+      issueDate: "",
+      validTo: "",
+    },
+  ]);
 
   const [values, setValues] = useState({
     givenName: "",
@@ -83,11 +79,41 @@ const KYCWriteup = () => {
     nationalitySelVal: "SG",
     countryOfDomicileSelVal: "SG",
     taxResidenceSelVal: "IN",
-    identificationTypeSelVal: "DL",
+    /*identificationTypeSelVal: "DL",
     identificationNo: "",
     issueCountry: "SG",
     issueDate: "",
-    validTo: "",
+    validTo: "",*/
+    clientIdentificationForm: [
+      {
+        isChecked: false,
+        identificationTypeSelVal: "DL",
+        identificationNo: "",
+        issueCountry: "SG",
+        issueDate: "",
+        validTo: "",
+      },
+    ],
+  });
+
+  const [val, setVal] = useState({
+    givenName: "",
+    surName: "",
+    dob: "",
+    clientName: "",
+    nationalitySelVal: "SG",
+    countryOfDomicileSelVal: "SG",
+    taxResidenceSelVal: "IN",
+    clientIdentificationForm: [
+      {
+        isChecked: false,
+        identificationTypeSelVal: "DL",
+        identificationNo: "",
+        issueCountry: "SG",
+        issueDate: "",
+        validTo: "",
+      },
+    ],
   });
 
   useEffect(() => {
@@ -104,11 +130,43 @@ const KYCWriteup = () => {
         value: values.value,
       }))
     );
+    setValues({
+      ...values,
+      givenName: "Name 1",
+      surName: "",
+      dob: "",
+      clientName: "",
+      nationalitySelVal: "SG",
+      countryOfDomicileSelVal: "SG",
+      taxResidenceSelVal: "IN",
+      /*identificationTypeSelVal: "DL",
+    identificationNo: "",
+    issueCountry: "SG",
+    issueDate: "",
+    validTo: "",*/
+      clientIdentificationForm: [
+        {
+          isChecked: false,
+          identificationTypeSelVal: "DL",
+          identificationNo: "",
+          issueCountry: "SG",
+          issueDate: "",
+          validTo: "",
+        },
+      ],
+    });
   }, []);
 
   const onSubmit = (data) => {
-    //setGivenName(data.givenName);
-    alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
+
+    //console.log(JSON.stringify(val));
+
+    console.log(values);
+
+    console.log(JSON.stringify(values));
+    //alert(JSON.stringify(data));
+    //alert(JSON.stringify(values));
   };
 
   const classes = useStyles();
@@ -121,6 +179,89 @@ const KYCWriteup = () => {
       ...values,
       [event.target.name]: event.target.value,
     });
+
+    //console;
+  };
+
+  const handleInputChange = (e, index) => {
+    const { name, value, type, checked } = e.target;
+    const list = [...values.clientIdentificationForm];
+
+    if (type == "checkbox") {
+      list[index]["isChecked"] = checked;
+    } else {
+      list[index][name] = value;
+    }
+
+    // setValues(list);
+
+    setValues({
+      ...values,
+      clientIdentificationForm: list,
+    });
+  };
+
+  // handle click event of the Add button
+  const handleAddClick = (data) => {
+    setClientIdentificationForm([
+      ...values.clientIdentificationForm,
+      {
+        isChecked: false,
+        identificationTypeSelVal: "DL",
+        identificationNo: "",
+        issueCountry: "SG",
+        issueDate: "",
+        validTo: "",
+      },
+    ]);
+
+    //setValues([...values, clientIdentificationForm]);
+
+    //setValues({
+    //  ...setValues.clientIdentificationForm], values.clientIdentificationForm
+    // });
+
+    // console.log(JSON.stringify(data));
+
+    const list = [...clientIdentificationForm];
+    //setValues(list);
+
+    setValues({
+      ...values,
+      clientIdentificationForm: [
+        ...values.clientIdentificationForm,
+        {
+          isChecked: false,
+          identificationTypeSelVal: "DL",
+          identificationNo: "",
+          issueCountry: "SG",
+          issueDate: "",
+          validTo: "",
+        },
+      ],
+    });
+
+    //const list = values.clientIdentificationForm;
+
+    console.log(list);
+  };
+
+  const handleRemoveClick = () => {
+    //const list = [...values.clientIdentificationForm];
+    // values.splice(i,1);
+    //this.setState({ values });
+
+    const list = [...values.clientIdentificationForm];
+    // let filteredList = list.map((event) => event);
+
+    let filteredList = list.filter((entry, i) => entry.isChecked == false);
+
+    setValues({
+      ...values,
+      clientIdentificationForm: filteredList,
+    });
+
+    // console.log(e);
   };
 
   return (
@@ -281,97 +422,137 @@ const KYCWriteup = () => {
                 <CardHeader subheader="" title="Client Identification" />
                 <Divider />
                 <CardContent>
-                  <Grid container spacing={3}>
-                    <Grid item lg={4} md={4} xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Select Identification Type"
-                        name="identificationTypeSelVal"
-                        onChange={handleChange}
-                        required
-                        select
-                        SelectProps={{ native: true }}
-                        value={values.identificationTypeSelVal}
-                        variant="outlined"
-                        inputRef={register}
-                      >
-                        {identificationTypeDrpdwnVals.map((values) => {
-                          return (
-                            <option key={values.value} value={values.value}>
-                              {values.label}
-                            </option>
-                          );
-                        })}
-                      </TextField>
-                    </Grid>
-                    <Grid item lg={4} md={4} xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Identification No."
-                        name="identificationNo"
-                        onChange={handleChange}
-                        required
-                        SelectProps={{ native: true }}
-                        value={values.identificationNo}
-                        variant="outlined"
-                        inputRef={register}
-                        InputLabelProps={{ shrink: true }}
-                      ></TextField>
-                    </Grid>
-                    <Grid item lg={4} md={4} xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Select Issue Country"
-                        name="issueCountrySelVal"
-                        onChange={handleChange}
-                        required
-                        select
-                        SelectProps={{ native: true }}
-                        value={values.issueCountrySelVal}
-                        variant="outlined"
-                        inputRef={register}
-                      >
-                        {countriesDrpdwnVals.map((values) => {
-                          return (
-                            <option key={values.value} value={values.value}>
-                              {values.label}
-                            </option>
-                          );
-                        })}
-                      </TextField>
-                    </Grid>
-                    <Grid item lg={4} md={4} xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Issue Date"
-                        name="issueDate"
-                        type="date"
-                        onChange={handleChange}
-                        required
-                        SelectProps={{ native: true }}
-                        value={values.issueDate}
-                        variant="outlined"
-                        inputRef={register}
-                        InputLabelProps={{ shrink: true }}
-                      ></TextField>
-                    </Grid>
-                    <Grid item lg={4} md={4} xs={12}>
-                      <TextField
-                        fullWidth
-                        label="Issue Date"
-                        name="validTo"
-                        type="date"
-                        onChange={handleChange}
-                        required
-                        SelectProps={{ native: true }}
-                        value={values.validTo}
-                        variant="outlined"
-                        inputRef={register}
-                        InputLabelProps={{ shrink: true }}
-                      ></TextField>
-                    </Grid>
-                  </Grid>
-
+                  {values.clientIdentificationForm.map((x, i) => {
+                    return (
+                      <div>
+                        <br />
+                        <Grid container spacing={3}>
+                          <Grid
+                            item
+                            container
+                            lg={1}
+                            md={1}
+                            xs={1}
+                            justify="center"
+                            alignItems="center"
+                          >
+                            <input
+                              type="checkbox"
+                              name="checBox"
+                              onChange={(e) => handleInputChange(e, i)}
+                              checked={x.isChecked}
+                            />
+                          </Grid>
+                          <Grid
+                            item
+                            container
+                            lg={11}
+                            md={11}
+                            xs={11}
+                            spacing={2}
+                          >
+                            <Grid item lg={4} md={4} xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Select Identification Type"
+                                name="identificationTypeSelVal"
+                                onChange={(e) => handleInputChange(e, i)}
+                                required
+                                select
+                                SelectProps={{ native: true }}
+                                value={x.identificationTypeSelVal}
+                                variant="outlined"
+                                inputRef={register}
+                              >
+                                {identificationTypeDrpdwnVals.map((values) => {
+                                  return (
+                                    <option
+                                      key={values.value}
+                                      value={values.value}
+                                    >
+                                      {values.label}
+                                    </option>
+                                  );
+                                })}
+                              </TextField>
+                            </Grid>
+                            <Grid item lg={4} md={4} xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Identification No."
+                                name="identificationNo"
+                                onChange={(e) => handleInputChange(e, i)}
+                                required
+                                SelectProps={{ native: true }}
+                                value={x.identificationNo}
+                                variant="outlined"
+                                inputRef={register}
+                                InputLabelProps={{ shrink: true }}
+                              ></TextField>
+                            </Grid>
+                            <Grid item lg={4} md={4} xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Select Issue Country"
+                                name="issueCountrySelVal"
+                                onChange={(e) => handleInputChange(e, i)}
+                                required
+                                select
+                                SelectProps={{ native: true }}
+                                value={x.issueCountrySelVal}
+                                variant="outlined"
+                                inputRef={register}
+                              >
+                                {countriesDrpdwnVals.map((values) => {
+                                  return (
+                                    <option
+                                      key={values.value}
+                                      value={values.value}
+                                    >
+                                      {values.label}
+                                    </option>
+                                  );
+                                })}
+                              </TextField>
+                            </Grid>
+                            <Grid item lg={4} md={4} xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Issue Date"
+                                name="issueDate"
+                                type="date"
+                                onChange={(e) => handleInputChange(e, i)}
+                                required
+                                SelectProps={{ native: true }}
+                                value={x.issueDate}
+                                variant="outlined"
+                                inputRef={register}
+                                InputLabelProps={{ shrink: true }}
+                              ></TextField>
+                            </Grid>
+                            <Grid item lg={4} md={4} xs={12}>
+                              <TextField
+                                fullWidth
+                                label="Issue Date"
+                                name="validTo"
+                                type="date"
+                                onChange={(e) => handleInputChange(e, i)}
+                                required
+                                SelectProps={{ native: true }}
+                                value={x.validTo}
+                                variant="outlined"
+                                inputRef={register}
+                                InputLabelProps={{ shrink: true }}
+                              ></TextField>
+                            </Grid>
+                          </Grid>
+                        </Grid>
+                        <br />
+                        <Divider />
+                        <hr />
+                      </div>
+                    );
+                  })}
                   <Grid item lg={12} md={12} xs={12}>
                     <Box display="flex" justifyContent="flex-end" p={2}>
                       <div className={classes.buttonClass}>
@@ -379,6 +560,7 @@ const KYCWriteup = () => {
                           color="contained"
                           size="small"
                           variant="outlined"
+                          onClick={handleAddClick}
                         >
                           +
                         </Button>
@@ -386,6 +568,8 @@ const KYCWriteup = () => {
                           color="contained"
                           size="small"
                           variant="outlined"
+                          // onClick={handleRemoveClick}
+                          onClick={handleRemoveClick}
                         >
                           -
                         </Button>
