@@ -25,13 +25,13 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Page from "../../../components/Page";
+import Page from "../../../../components/Page";
 import { useForm } from "react-hook-form";
 
-import countriesDataInJSON from "../data/countries.json";
-import identificationTypeDataInJSON from "../data/identificationType.json";
+import countriesDataInJSON from "../../data/countries.json";
+import identificationTypeDataInJSON from "../../data/identificationType.json";
 
-import kycWriteupFakeData from "../data/kycWriteupFakeData.json";
+import kycWriteupFakeData from "../../data/kycWriteupFakeData.json";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const KYCWriteup = () => {
+const KYCWriteup02 = () => {
   const { register, handleSubmit } = useForm();
 
   const [countriesDrpdwnVals, setCountriesDrpdwnVals] = useState([]);
@@ -103,18 +103,7 @@ const KYCWriteup = () => {
       }))
     );
 
-    setValues({
-      ...values,
-      givenName: kycWriteupFakeData.givenName,
-      surName: kycWriteupFakeData.surName,
-      dob: kycWriteupFakeData.dob,
-      clientName: kycWriteupFakeData.clientName,
-      nationalitySelVal: kycWriteupFakeData.nationalitySelVal,
-      countryOfDomicileSelVal: kycWriteupFakeData.countryOfDomicileSelVal,
-      taxResidenceSelVal: kycWriteupFakeData.taxResidenceSelVal,
-      clientIdentificationForm: kycWriteupFakeData.clientIdentificationForm,
-    });
-  }, []);
+ 
 
   const onSubmit = (data) => {
     console.log(values);
@@ -224,6 +213,8 @@ const KYCWriteup = () => {
                         variant="outlined"
                         inputRef={register}
                         InputLabelProps={{ shrink: true }}
+                        multiline="true"
+                        defaultValue="qwertyuioplkjhgfdsazxcvnvnvmb,nlgldldldldl"
                       ></TextField>
                     </Grid>
                     <Grid item lg={4} md={4} xs={12}>
@@ -392,8 +383,6 @@ const KYCWriteup = () => {
                                 value={x.identificationTypeSelVal}
                                 variant="outlined"
                                 inputRef={register}
-                                multiline="true"
-                                defaultValue="qwertyuioplkjhgfdsazxcvnvnvmb,nlgldldldldl"
                               >
                                 {identificationTypeDrpdwnVals.map((values) => {
                                   return (
@@ -536,4 +525,4 @@ const KYCWriteup = () => {
   );
 };
 
-export default KYCWriteup;
+export default KYCWriteup02;
