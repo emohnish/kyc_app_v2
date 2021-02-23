@@ -30,14 +30,8 @@ import { useForm } from "react-hook-form";
 
 import countriesDataInJSON from "../data/countries.json";
 import identificationTypeDataInJSON from "../data/identificationType.json";
-import ClientIdentification from "./ClientIdentification";
-import ClientParticulars from "./ClientParticulars";
 
 import kycWriteupFakeData from "../data/kycWriteupFakeData.json";
-
-const StyledBox = styled(Box)`
-  background-color: #efefef;
-`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,6 +51,7 @@ const KYCWriteup = () => {
   const { register, handleSubmit } = useForm();
 
   const [countriesDrpdwnVals, setCountriesDrpdwnVals] = useState([]);
+
   const [
     identificationTypeDrpdwnVals,
     setIdentificationTypeDrpdwnVals,
@@ -74,31 +69,6 @@ const KYCWriteup = () => {
   ]);
 
   const [values, setValues] = useState({
-    givenName: "",
-    surName: "",
-    dob: "",
-    clientName: "",
-    nationalitySelVal: "SG",
-    countryOfDomicileSelVal: "SG",
-    taxResidenceSelVal: "IN",
-    /*identificationTypeSelVal: "DL",
-    identificationNo: "",
-    issueCountry: "SG",
-    issueDate: "",
-    validTo: "",*/
-    clientIdentificationForm: [
-      {
-        isChecked: false,
-        identificationTypeSelVal: "DL",
-        identificationNo: "",
-        issueCountry: "SG",
-        issueDate: "",
-        validTo: "",
-      },
-    ],
-  });
-
-  const [val, setVal] = useState({
     givenName: "",
     surName: "",
     dob: "",
@@ -147,14 +117,8 @@ const KYCWriteup = () => {
   }, []);
 
   const onSubmit = (data) => {
-    //alert(JSON.stringify(data));
-
-    //console.log(JSON.stringify(val));
-
     console.log(values);
-
     console.log(JSON.stringify(values));
-    //alert(JSON.stringify(data));
     alert(JSON.stringify(values));
   };
 
@@ -182,8 +146,6 @@ const KYCWriteup = () => {
       list[index][name] = value;
     }
 
-    // setValues(list);
-
     setValues({
       ...values,
       clientIdentificationForm: list,
@@ -204,17 +166,7 @@ const KYCWriteup = () => {
       },
     ]);
 
-    //setValues([...values, clientIdentificationForm]);
-
-    //setValues({
-    //  ...setValues.clientIdentificationForm], values.clientIdentificationForm
-    // });
-
-    // console.log(JSON.stringify(data));
-
     const list = [...clientIdentificationForm];
-    //setValues(list);
-
     setValues({
       ...values,
       clientIdentificationForm: [
@@ -229,28 +181,16 @@ const KYCWriteup = () => {
         },
       ],
     });
-
-    //const list = values.clientIdentificationForm;
-
-    console.log(list);
   };
 
   const handleRemoveClick = () => {
-    //const list = [...values.clientIdentificationForm];
-    // values.splice(i,1);
-    //this.setState({ values });
-
     const list = [...values.clientIdentificationForm];
-    // let filteredList = list.map((event) => event);
-
     let filteredList = list.filter((entry, i) => entry.isChecked == false);
 
     setValues({
       ...values,
       clientIdentificationForm: filteredList,
     });
-
-    // console.log(e);
   };
 
   return (
@@ -262,7 +202,7 @@ const KYCWriteup = () => {
               {/*} <ClientParticulars
                 countriesDrpdwnVals={countriesDrpdwnVals}
                 handleChange={() => handleChange()}
-  /> */}
+              /> */}
 
               <Card>
                 <CardHeader
@@ -405,7 +345,7 @@ const KYCWriteup = () => {
               {/* <ClientIdentification
                 countriesDrpdwnVals={countriesDrpdwnVals}
                 identificationTypeDrpdwnVals={identificationTypeDrpdwnVals}
-            />*/}
+              />*/}
 
               <Card>
                 <CardHeader subheader="" title="Client Identification" />
@@ -568,7 +508,6 @@ const KYCWriteup = () => {
                 </CardContent>
               </Card>
             </Grid>
-
             <Grid item lg={12} md={12} xs={12}>
               <Box display="flex" justifyContent="flex-end" p={2}>
                 <div className={classes.buttonClass}>
