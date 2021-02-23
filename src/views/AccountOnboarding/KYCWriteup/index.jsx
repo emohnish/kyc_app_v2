@@ -33,6 +33,8 @@ import identificationTypeDataInJSON from "../data/identificationType.json";
 import ClientIdentification from "./ClientIdentification";
 import ClientParticulars from "./ClientParticulars";
 
+import kycWriteupFakeData from "../data/kycWriteupFakeData.json";
+
 const StyledBox = styled(Box)`
   background-color: #efefef;
 `;
@@ -130,30 +132,17 @@ const KYCWriteup = () => {
         value: values.value,
       }))
     );
+
     setValues({
       ...values,
-      givenName: "Name 1",
-      surName: "",
-      dob: "",
-      clientName: "",
-      nationalitySelVal: "SG",
-      countryOfDomicileSelVal: "SG",
-      taxResidenceSelVal: "IN",
-      /*identificationTypeSelVal: "DL",
-    identificationNo: "",
-    issueCountry: "SG",
-    issueDate: "",
-    validTo: "",*/
-      clientIdentificationForm: [
-        {
-          isChecked: false,
-          identificationTypeSelVal: "DL",
-          identificationNo: "",
-          issueCountry: "SG",
-          issueDate: "",
-          validTo: "",
-        },
-      ],
+      givenName: kycWriteupFakeData.givenName,
+      surName: kycWriteupFakeData.surName,
+      dob: kycWriteupFakeData.dob,
+      clientName: kycWriteupFakeData.clientName,
+      nationalitySelVal: kycWriteupFakeData.nationalitySelVal,
+      countryOfDomicileSelVal: kycWriteupFakeData.countryOfDomicileSelVal,
+      taxResidenceSelVal: kycWriteupFakeData.taxResidenceSelVal,
+      clientIdentificationForm: kycWriteupFakeData.clientIdentificationForm,
     });
   }, []);
 
@@ -166,7 +155,7 @@ const KYCWriteup = () => {
 
     console.log(JSON.stringify(values));
     //alert(JSON.stringify(data));
-    //alert(JSON.stringify(values));
+    alert(JSON.stringify(values));
   };
 
   const classes = useStyles();

@@ -1,0 +1,28 @@
+{
+  "givenName": "Name 1",
+  "surName": "Surname 1",
+  "dob": "2021-02-21",
+  "clientName": "Client Name 1",
+  "nationalitySelVal": "SG",
+  "countryOfDomicileSelVal": "SG",
+  "taxResidenceSelVal": "IN",
+  "clientIdentificationForm": [
+    {
+      "isChecked": false,
+      "identificationTypeSelVal": "DL",
+      "identificationNo": "IdentificationNo12345",
+      "issueCountry": "SG",
+      "issueDate": "2021-02-14",
+      "validTo": "2021-02-21"
+    },
+    {
+      "isChecked": false,
+      "identificationTypeSelVal": "RC",
+      "identificationNo": "IdentificationNo98765",
+      "issueCountry": "SG",
+      "issueDate": "2021-02-01",
+      "validTo": "2021-02-22",
+      "issueCountrySelVal": "ML"
+    }
+  ]
+}
